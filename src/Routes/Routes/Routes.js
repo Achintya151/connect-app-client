@@ -1,8 +1,11 @@
 import Main from "../../Layouts/Main";
 import About from "../../Pages/About/About";
 import Home from "../../Pages/Home/Home";
+import Login from "../../Pages/Login/Login";
 import Media from "../../Pages/Media/Media";
 import Message from "../../Pages/Message/Message";
+import Signup from "../../Pages/Signup/Signup";
+import PrivateRoute from "../PrivateRoutes/PrivateRoute";
 
 const { createBrowserRouter } = require("react-router-dom");
 
@@ -10,7 +13,7 @@ const { createBrowserRouter } = require("react-router-dom");
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <Main />,
+        element: <PrivateRoute><Main /></PrivateRoute>,
         children: [
             {
                 path: '/',
@@ -18,7 +21,8 @@ const router = createBrowserRouter([
             },
             {
                 path: '/media',
-                element: <Media />
+                element: <Media />,
+                loader: () => fetch('posts.json')
             },
             {
                 path: '/message',
@@ -27,8 +31,16 @@ const router = createBrowserRouter([
             {
                 path: '/about',
                 element: <About />
-            },
+            }
         ]
+    },
+    {
+        path: '/login',
+        element: <Login></Login>
+    },
+    {
+        path: '/signup',
+        element: <Signup></Signup>
     }
 ])
 
